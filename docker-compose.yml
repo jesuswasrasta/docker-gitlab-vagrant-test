@@ -80,6 +80,16 @@ services:
       - /home/git/.ssh/authorized_keys_proxy:/home/git/data/.ssh/authorized_keys_proxy
       - ./certs:/certs
 
+# TODO: così non basta, alla fine non tira su il container
+  # gitlab-runner1:
+  #   image: gitlab/gitlab-runner:latest
+  #   restart: unless-stopped
+  #   container_name: gitlab-runner1
+  #   hostname: gitlab-runner1
+  #   volumes:
+  #     - './gitlab-runner1-config:/etc/gitlab-runner:Z'
+  #     - '/var/run/docker.sock:/var/run/docker.sock'
+
   redis:
     image: sameersbn/redis:latest
     restart: unless-stopped

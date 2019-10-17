@@ -34,4 +34,8 @@ pip install docker-compose
 sudo usermod -aG docker vagrant
 newgrp docker
 
+#TODO registrare automaticamente i runner
+# - curl alle API di Gitlab per ottnere token
+# - chiama script gitlab-runner-register.sh
+
 echo "Done"
