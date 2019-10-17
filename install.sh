@@ -30,4 +30,8 @@ apt-get update -y
 apt-get install -y docker-ce
 pip install docker-compose
 
+#Add vagrant user to docker group
+sudo usermod -aG docker vagrant
+newgrp docker
+
 echo "Done"
