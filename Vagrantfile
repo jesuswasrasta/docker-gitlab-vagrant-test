@@ -26,6 +26,20 @@ Vagrant.configure("2") do |config|
   #   vb.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ] # to disable ubuntu-*-cloudimg-console.log
   # end
 
+  #Install required vagrant plugins, if needed
+  required_plugins = %w( vagrant-vbguest vagrant-hostmanager vagrant-disksize )
+  _retry = false
+  required_plugins.each do |plugin|
+      unless Vagrant.has_plugin? plugin
+          system "vagrant plugin install #{plugin}"
+          _retry=true
+      end
+  end
+
+  if (_retry)
+      exec "vagrant " + ARGV.join(' ')
+  end
+
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = true
   config.hostmanager.manage_guest = true
@@ -34,18 +48,20 @@ Vagrant.configure("2") do |config|
   config.hostmanager.ip_resolver = proc do |vm, resolving_vm|
     read_ip_address(vm)
   end
+
   end
 
   config.vm.define :gitlab_server do |gitlab_server|
     gitlab_server.vm.box = "ubuntu/bionic64"
+    gitlab_server.disksize.size = '64GB'
     gitlab_server.vm.hostname = "gitlab"
     gitlab_server.vm.synced_folder '.', '/vagrant/', disabled: false
     gitlab_server.vm.network "private_network", type: "dhcp"
 
     gitlab_server.hostmanager.aliases = ["gitlab.example.com", "registry.example.com"]
     gitlab_server.vm.provider :virtualbox do |vb|
-      vb.memory = '8024'
-      vb.cpus = '1'
+      vb.memory = '4096'
+      vb.cpus = '4'
     end
 
     gitlab_server.vm.provision "shell", path: "install.sh"
