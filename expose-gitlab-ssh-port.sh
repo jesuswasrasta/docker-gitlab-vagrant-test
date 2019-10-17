@@ -2,7 +2,7 @@
 set -ev
 
 GIT_UID_IN_HOST=${GIT_UID_IN_HOST:-1000}
-GITLAB_SSH_PORT=${GITLAB_SSH_PORT:-9922}
+GITLAB_SSH_PORT=${GITLAB_SSH_PORT:-10022}
 
 if ! id -u git >> /dev/null 2>&1; then
   groupadd -g ${GIT_UID_IN_HOST} git
