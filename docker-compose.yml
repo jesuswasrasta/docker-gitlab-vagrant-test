@@ -11,7 +11,7 @@ services:
       - /var/lib/gitlab/postgresql/:/var/lib/postgresql/
 
   gitlab:
-    image: sameersbn/gitlab:11.9.5
+    image: sameersbn/gitlab:12.3.5
     restart: unless-stopped
     ports:
       - "9922:22"
